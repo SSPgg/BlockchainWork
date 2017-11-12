@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hello Web - Truffle Webpack Demo w/ Frontend</title>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <script src="./node_modules/web3/dist/web3.min.js"></script>
+</head>
+<body>
+  <input id="input" type="text">
+  <button id="button">Set</button>
+
+  <pre id="output">
+
+  </pre>
+
+  <script>
+
+    var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    web3.eth.defaultAccount = web3.eth.accounts[0];
+
+    var HWContract = web3.eth.contract([
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_a",
+          "type": "string"
+        }
+      ],
+      "name": "setA",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getA",
+      "outputs": [
+        {
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    }
+  ]);
+
+    var HWCon = HWContract.at('0x593cb2ab71ac6d3577b0b0bb2df2dd5cd2014d19')
+
+    var input = document.getElementById("input");
+    var button = document.getElementById("button");
+    var output = document.getElementById("output");
+
+    button.addEventListener('click',function(){
+      HWCon.setA(input.value);
+      output.innerHTML = HWCon.getA();
+    });
+  </script>
+</body>
+</html>
