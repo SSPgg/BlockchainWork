@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+        body {
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-top: 2%;
+        font-family: "Open Sans", sans-serif;
+        }
+
+        label {
+        display: inline-block;
+        width: 100px;
+        }
+
+        input {
+        width: 500px;
+        padding: 5px;
+        font-size: 16px;
+        }
+        .inputCoin {
+        width: 50px;
+        padding: 5px;
+        font-size: 16px;
+        }
+
+        button {
+        font-size: 16px;
+        padding: 5px;
+        }
+
+        h1, h2 {
+            color:aqua;
+         text-align: center;
+        }
+
+        h2 {
+        color: #AAA;
+        font-size: 32px;
+        }
+        .heading{
+        color:darkolivegreen;
+        font-size: 18px;
+        font-weight: bold;
+        }
+        h3  {
+        font-weight: normal;
+        color: #AAA;
+        font-size: 24px;
+        }
+        span {
+            color:brown;
+        }
+        .black {
+        color: black;
+        }
+
+        #balance {
+        color: black;
+        }
+
+        .hint {
+        color: #666;
+        }
+        pre {
+        text-align: left;
+        white-space: pre-line;
+        }
+
+        </style>
+        <title>A simple Betting Game</title>
+        <script src="./node_modules/web3/dist/web3.min.js"></script>
+    </head>
+<body>
+    <h1> A Simple Betting Page</h1>
+    <h3> Owner Address : <span class="black"><span id="Oaddr"></span> has total supply of <span class="black"><span id="Obalance"></span> COINS</span></h3>
+    <h3> Send to Address > Number of Coins </h3>
+
+    <div>
+        <label for="Send_to">Send to Address:</label>
+        <input name="send_to" id="Send_To" type="text" placeholder="ex,0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"/>
+        <label for="Coin">Coins:</label>
+        <input class="inputCoin" name="sendcoin" id="Send_Coin" type="text" placeholder="ex,15"/> 
+        <button id="Send_Coin_Button">Send Coin</button>
+    </div>
+    <h3> Betting Information </h3>
+    <div class="heading" style="width: 1000px;">
+        <label for="Address" style="width: 40%; float: left; background-color:aqua">Address</label>
+        <label style="width: 20%; float: left; background-color:aqua">Coin Holding</label>
+        <label style="width: 20%; float: left; background-color:aqua">Bet Amount</label>
+        <label style="width: 20%; float: left; background-color:aqua">Bet Number</label>
+
+    </div>
+    <br>
+    <div style="width: 1000px;">
+        <pre id="Participant_Addr_1" style="width: 400px; float: left; background-color:darkturquoise;"></pre>
+        <pre id="Coin_Winth_Addr_1" style="width: 50px; float: left; background-color:yellow;"></pre>
+        <input class="inputCoin" name="bet_amt_addr_1" id="Bet_Amt_Addr_1" type="text" placeholder="ex,10" style="width: 10%; margin-left:150px;"/> 
+        <input class="inputCoin" name="bet_num_addr_1" id="Bet_Num_Addr_1" type="text" placeholder="ex,1-5" style="width: 10%;margin-left:80px;"/> 
+    </div>
+    <br>
+    <div style="width: 1000px;">
+        <pre id="Participant_Addr_2" style="width: 400px; float: left; background-color: darkturquoise;"></pre>
+        <pre id="Coin_Winth_Addr_2" style="width: 50px; float: left; background-color:yellow;"></pre>
+        <input class="inputCoin" name="bet_amt_addr_2" id="Bet_Amt_Addr_2" type="text" placeholder="ex,10" style="width: 10%; margin-left:150px;"/> 
+        <input class="inputCoin" name="bet_num_addr_2" id="Bet_Num_Addr_2" type="text" placeholder="ex,1-5" style="width: 10%;margin-left:80px;"/> 
+    </div>
+        <br>
+    <div style="width: 1000px;">
+        <pre id="Participant_Addr_3" style="width: 400px; float: left; background-color: darkturquoise;"></pre>
+        <pre id="Coin_Winth_Addr_3" style="width: 50px; float: left; background-color:yellow;"></pre>
+        <input class="inputCoin" name="bet_amt_addr_3" id="Bet_Amt_Addr_3" type="text" placeholder="ex,10" style="width: 10%; margin-left:150px;"/> 
+        <input class="inputCoin" name="bet_num_addr_3" id="Bet_Num_Addr_3" type="text" placeholder="ex,1-5" style="width: 10%;margin-left:80px;"/> 
+    </div>
+        <br>
+    <div style="width: 1000px;">
+        <pre id="Participant_Addr_4" style="width: 400px; float: left; background-color: darkturquoise;"></pre>
+        <pre id="Coin_Winth_Addr_4" style="width: 50px; float: left; background-color:yellow;"></pre>
+        <input class="inputCoin" name="bet_amt_addr_4" id="Bet_Amt_Addr_4" type="text" placeholder="ex,10" style="width: 10%; margin-left:150px;"/> 
+        <input class="inputCoin" name="bet_num_addr_4" id="Bet_Num_Addr_4" type="text" placeholder="ex,1-5" style="width: 10%;margin-left:80px;"/> 
+    </div>
+    <br>
+    <div style="width: 1000px;">
+        <pre id="Participant_Addr_5" style="width: 400px; float: left; background-color: darkturquoise;"></pre>
+        <pre id="Coin_Winth_Addr_5" style="width: 50px; float: left; background-color:yellow;"></pre>
+        <input class="inputCoin" name="bet_amt_addr_5" id="Bet_Amt_Addr_5" type="text" placeholder="ex,10" style="width: 10%; margin-left:150px;"/> 
+        <input class="inputCoin" name="bet_num_addr_5" id="Bet_Num_Addr_5" type="text" placeholder="ex,1-5" style="width: 10%;margin-left:80px;"/> 
+    </div>
+
+    <div>
+        <button id="BetLock_Button">Bet Lock</button>
+        <button id="WinResult_Button" style="margin-left:50px;">WinResult</button>
+        <input class="inputCoin" name="winnumber" id="WinNumber_Result" type="text" placeholder="1-5" style="width: 30px; margin-left:50px;background-color:red;"/>
+    </div>
+
+    <script>
+        var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+        var BetContract = web3.eth.contract([
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "balances",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "TotalBets",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "receiver",
+          "type": "address"
+        },
+        {
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "sendCoin",
+      "outputs": [
+        {
+          "name": "sufficient",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "betlogs",
+      "outputs": [
+        {
+          "name": "better",
+          "type": "address"
+        },
+        {
+          "name": "betamt",
+          "type": "uint256"
+        },
+        {
+          "name": "betnum",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "w1",
+          "type": "uint256"
+        }
+      ],
+      "name": "WinDeal",
+      "outputs": [
+        {
+          "name": "r1",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "b1",
+          "type": "address"
+        },
+        {
+          "name": "u1",
+          "type": "uint256"
+        },
+        {
+          "name": "n1",
+          "type": "uint256"
+        }
+      ],
+      "name": "Bet",
+      "outputs": [
+        {
+          "name": "s1",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "getBalance",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "Transfer",
+      "type": "event"
+    }
+  ]);
+
+        var BetCon = BetContract.at('0x0a51ff6af61e3f3f941b3a3bc64c56e347cc5005')
+
+        var Oaddr = document.getElementById("Oaddr");
+        var Obalance = document.getElementById("Obalance");
+        var Send_To = document.getElementById("Send_To");
+        var Send_Coin = document.getElementById("Send_Coin");
+        var Send_Coin_Button = document.getElementById("Send_Coin_Button");
+
+        var Participant_Addr_1 = document.getElementById("Participant_Addr_1");
+        var Coin_Winth_Addr_1 = document.getElementById("Coin_Winth_Addr_1");
+        var Bet_Amt_Addr_1 = document.getElementById("Bet_Amt_Addr_1");
+        var Bet_Num_Addr_1 = document.getElementById("Bet_Num_Addr_1");
+
+        var Participant_Addr_2 = document.getElementById("Participant_Addr_2");
+        var Coin_Winth_Addr_2 = document.getElementById("Coin_Winth_Addr_2");
+        var Bet_Amt_Addr_2 = document.getElementById("Bet_Amt_Addr_2");
+        var Bet_Num_Addr_2 = document.getElementById("Bet_Num_Addr_2");
+
+        var Participant_Addr_3 = document.getElementById("Participant_Addr_3");
+        var Coin_Winth_Addr_3 = document.getElementById("Coin_Winth_Addr_3");
+        var Bet_Amt_Addr_3 = document.getElementById("Bet_Amt_Addr_3");
+        var Bet_Num_Addr_3 = document.getElementById("Bet_Num_Addr_3");
+
+        var Participant_Addr_4 = document.getElementById("Participant_Addr_4");
+        var Coin_Winth_Addr_4 = document.getElementById("Coin_Winth_Addr_4");
+        var Bet_Amt_Addr_4 = document.getElementById("Bet_Amt_Addr_4");
+        var Bet_Num_Addr_4 = document.getElementById("Bet_Num_Addr_4");
+
+        var Participant_Addr_5 = document.getElementById("Participant_Addr_5");
+        var Coin_Winth_Addr_5 = document.getElementById("Coin_Winth_Addr_5");
+        var Bet_Amt_Addr_5 = document.getElementById("Bet_Amt_Addr_5");
+        var Bet_Num_Addr_5 = document.getElementById("Bet_Num_Addr_5");
+
+        var BetLock_Button = document.getElementById("BetLock_Button");
+        var WinResult_Button = document.getElementById("WinResult_Button");
+        var WinNumber_Result = document.getElementById("WinNumber_Result");
+
+
+        Oaddr.innerHTML = web3.eth.accounts[0];
+        
+        Participant_Addr_1.innerHTML = web3.eth.accounts[1];
+        Participant_Addr_2.innerHTML = web3.eth.accounts[2];
+        Participant_Addr_3.innerHTML = web3.eth.accounts[3];
+        Participant_Addr_4.innerHTML = web3.eth.accounts[4];
+        Participant_Addr_5.innerHTML = web3.eth.accounts[5];
+
+        function Ref_Balance(){
+            Obalance.innerHTML = BetCon.getBalance(web3.eth.accounts[0]);
+            Coin_Winth_Addr_1.innerHTML = BetCon.getBalance(web3.eth.accounts[1]);
+            Coin_Winth_Addr_2.innerHTML = BetCon.getBalance(web3.eth.accounts[2]);
+            Coin_Winth_Addr_3.innerHTML = BetCon.getBalance(web3.eth.accounts[3]);
+            Coin_Winth_Addr_4.innerHTML = BetCon.getBalance(web3.eth.accounts[4]);
+            Coin_Winth_Addr_5.innerHTML = BetCon.getBalance(web3.eth.accounts[5]);
+        };
+        
+        Ref_Balance();
+
+        Send_Coin_Button.addEventListener('click',function(){
+            BetCon.sendCoin(Send_To.value,Send_Coin.value);
+            Ref_Balance();
+        });
+
+        BetLock_Button.addEventListener('click',function(){
+            var l_bet_amt = Bet_Amt_Addr_1.value;
+            var l_bet_num = Bet_Num_Addr_1.value;
+            var l_addr    = web3.eth.accounts[1];
+
+            if ((l_bet_amt > 0 && l_bet_amt < BetCon.getBalance(l_addr)) &&
+                (l_bet_num > 0 && l_bet_num < 6)){
+                BetCon.Bet(l_addr,l_bet_amt,l_bet_num,{gas:200000});
+            }
+
+            var l_bet_amt = Bet_Amt_Addr_2.value;
+            var l_bet_num = Bet_Num_Addr_2.value;
+            var l_addr    = web3.eth.accounts[2];
+            if ((l_bet_amt > 0 && l_bet_amt < BetCon.getBalance(l_addr)) &&
+                (l_bet_num > 0 && l_bet_num < 6)){
+                BetCon.Bet(l_addr,l_bet_amt,l_bet_num,{gas:200000});
+            }
+
+            var l_bet_amt = Bet_Amt_Addr_3.value;
+            var l_bet_num = Bet_Num_Addr_3.value;
+            var l_addr    = web3.eth.accounts[3];
+            if ((l_bet_amt > 0 && l_bet_amt < BetCon.getBalance(l_addr)) &&
+                (l_bet_num > 0 && l_bet_num < 6)){
+                BetCon.Bet(l_addr,l_bet_amt,l_bet_num,{gas:200000});
+            }
+
+            var l_bet_amt = Bet_Amt_Addr_4.value;
+            var l_bet_num = Bet_Num_Addr_4.value;
+            var l_addr    = web3.eth.accounts[4];
+            if ((l_bet_amt > 0 && l_bet_amt < BetCon.getBalance(l_addr)) &&
+                (l_bet_num > 0 && l_bet_num < 6)){
+                BetCon.Bet(l_addr,l_bet_amt,l_bet_num,{gas:200000});
+            }
+
+            var l_bet_amt = Bet_Amt_Addr_5.value;
+            var l_bet_num = Bet_Num_Addr_5.value;
+            var l_addr    = web3.eth.accounts[5];
+            if ((l_bet_amt > 0 && l_bet_amt < BetCon.getBalance(l_addr)) &&
+                (l_bet_num > 0 && l_bet_num < 6)){
+                BetCon.Bet(l_addr,l_bet_amt,l_bet_num,{gas:200000});
+            }
+
+            Ref_Balance();
+        });
+
+        WinResult_Button.addEventListener('click',function(){
+            var l_winNum = WinNumber_Result.value;
+            if (l_winNum > 0 && l_winNum < 6){
+                BetCon.WinDeal(l_winNum,{gas:200000});
+            }
+            Ref_Balance();
+        });
+
+  </script>
+</body>
+</html>
